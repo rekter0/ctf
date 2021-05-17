@@ -1,0 +1,7 @@
+#!/bin/sh
+sleep 5
+sudo -u www-data python3 /var/www/internal.py &
+
+chown www-data:www-data -R /var/www/db/
+
+exec "$@"

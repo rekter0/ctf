@@ -1,0 +1,93 @@
+  <div class="row">
+    <div class="col-md-4">
+        
+        <textarea id="invitesT" rows=20 class="form-control">
+          
+        </textarea>
+        
+    </div>
+    <div class="col-md-8">
+
+      <div class="row d-none">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title"></h4>
+              <p class="card-text">
+                
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Privilege</th>
+    </tr>
+  </thead>
+  <tbody id='usersList'>
+  
+    
+  
+    
+  
+  </tbody>
+</table>
+
+    </div>
+  </div>
+
+
+  <script>
+    $(document).ready(function(){
+
+            $.ajax({
+                url: 'api.php', 
+                type : "POST", 
+                dataType : 'json',
+                contentType: 'application/json',
+                data : JSON.stringify({"action":"admin"}),
+                success : function(result) {
+                  if(result.STATUS=='success'){
+                    $("#invitesT").html("INVITE CODES\n\n\n"+result.DATA.invites);
+                    var counter=1;
+                    $.each(result.DATA.users,function(k,v){
+                      $("#usersList").append(`<tr>
+                                                      <th scope="row">
+                                                        ${counter}
+                                                      </th>
+                                                      <td>
+                                                        
+                                                        `+$('<div>').text(v[0]).html()+`
+                                                        
+                                                      </td>
+                                                      <td>
+                                                        
+                                                        `+(v[1]=='1'?'admin':'user')+`
+                                                        
+                                                      </td>
+                                                      
+                                                    </tr>`);
+                      counter++;
+                    });  
+                    
+                  }else{
+                    alert`ERR`;
+                    document.location="./";
+                  }
+                  
+                },
+                error: function(xhr, resp, text) {
+                    alert`ERR`;
+                }
+            });
+
+            
+
+    });
+
+</script>

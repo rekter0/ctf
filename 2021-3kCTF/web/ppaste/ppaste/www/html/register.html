@@ -1,0 +1,54 @@
+  <div class="row">
+    <div class="col-md-12">
+         <div class="ht-tm-codeblock ht-tm-btn">
+        <div class="ht-tm-element card text-center">
+          <div class="card-header">
+            Sign-up
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <form id=form action="" method=POST>
+                  <input type="hidden" name="action" value="login">
+                 <div class="ht-tm-element ht-tm-element-inner">
+                  <input class="form-control" type="text" id="fuser" placeholder="username">
+                </div><br/>
+                <div class="ht-tm-element ht-tm-element-inner">
+                  <input class="form-control" type="text" id="fpass" placeholder="password">
+                </div><br/>
+                <div class="ht-tm-element ht-tm-element-inner">
+                  <input class="form-control" type="text" id="finvite" placeholder="invite code">
+                </div>
+              </form>
+
+            </p>
+          </div>
+          <div class="card-footer text-muted">
+            <button id=submit class="btn btn-primary">GO!</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+    $(document).ready(function(){
+        $("#submit").on('click', function(){
+            $.ajax({
+                url: 'api.php', 
+                type : "POST", 
+                dataType : 'json',
+                contentType: 'application/json',
+                data : JSON.stringify({"action":"register","d":{"user":fuser.value,"pass":fpass.value,"invite":finvite.value}}),
+                success : function(result) {
+                  alert(result.STATUS);
+                  if(result.STATUS=='success') document.location="./login.html"
+                },
+                error: function(xhr, resp, text) {
+                    alert`ERR`;
+                }
+            })
+        });
+    });
+
+</script>

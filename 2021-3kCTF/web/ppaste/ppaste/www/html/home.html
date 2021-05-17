@@ -1,0 +1,128 @@
+  <div class="row">
+    <div class="col-md-3">
+        
+
+        
+          <button  style="width: 90%;" type="button" class="btn-primary btn" data-toggle="modal" data-target="#exampleModal" >New</button>
+        
+    </div>
+    <div class="col-md-9">
+
+      <div class="row d-none">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title"></h4>
+              <p class="card-text">
+                
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+    </tr>
+  </thead>
+  <tbody id='MyPastesList'>
+  
+    
+  
+    
+  
+  </tbody>
+</table>
+
+    </div>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Paste</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id=form action="" method=POST>
+                  <input type="hidden" name="action" value="login">
+                 <div class="ht-tm-element ht-tm-element-inner">
+                  <input class="form-control" type="text" id="ptitle" placeholder="title">
+                </div><br/>
+                <div class="ht-tm-element ht-tm-element-inner">
+                  <textarea id="pcontent" placeholder="paste content" class="form-control" rows=10></textarea>
+                </div>
+              </form>
+      </div>
+      <div class="modal-footer">
+       
+            <button id=submit class="btn btn-primary">GO!</button>
+          
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    $(document).ready(function(){
+
+            $.ajax({
+                url: 'api.php', 
+                type : "POST", 
+                dataType : 'json',
+                contentType: 'application/json',
+                data : JSON.stringify({"action":"pastes"}),
+                success : function(result) {
+                  if(result.STATUS=='success'){
+                    var counter=1;
+                    $.each(result.DATA,function(k,v){
+                      $("#MyPastesList").append(`<tr>
+                                                      <th scope="row">
+                                                        ${counter}
+                                                      </th>
+                                                      <td>
+                                                        <a href="#!/view/${v.id}">
+                                                        `+$('<div>').text(v.title).html()+`
+                                                        </a>
+                                                      </td>
+                                                      
+                                                    </tr>`);
+                      counter++;
+                    });  
+                    
+                  }
+                  
+                },
+                error: function(xhr, resp, text) {
+                    alert`ERR`;
+                }
+            });
+
+            $("#submit").on('click', function(){
+              $.ajax({
+                  url: 'api.php', 
+                  type : "POST", 
+                  dataType : 'json',
+                  contentType: 'application/json',
+                  data : JSON.stringify({"action":"new","d":{"title":ptitle.value,"content":pcontent.value}}),
+                  success : function(result) {
+                    alert(result.STATUS);
+                    if(result.STATUS=='success') document.location="./"
+                  },
+                  error: function(xhr, resp, text) {
+                      alert`ERR`;
+                  }
+              })
+          });
+
+    });
+
+</script>

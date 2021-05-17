@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  ppaste:
+    build:
+      context: .
+      dockerfile: ./files/Dockerfile
+    ports:
+      - "8081:80"
+    volumes:
+      - ./www:/var/www

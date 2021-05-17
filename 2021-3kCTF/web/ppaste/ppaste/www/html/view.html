@@ -1,0 +1,118 @@
+  <div class="row">
+    <div class="col-md-12">
+         <div class="ht-tm-codeblock ht-tm-btn">
+        <div class="ht-tm-element card text-center">
+          <div class="card-header" id="ptitle">
+            
+          </div>
+
+          <div class="card-body">
+            <p class="card-text">
+              <form id=form action="" method=POST>
+                 <br/>
+                <div class="ht-tm-element ht-tm-element-inner">
+                  <textarea class="form-control" id="pcontent" rows="20"></textarea>
+                </div>
+              </form>
+
+            </p>
+          </div>
+          <div class="card-footer text-muted">
+            <div style="text-align: right;font-size:16px;">
+              <a id="dpdf" style="cursor: pointer;"><i class="far fa-file-pdf"></i></a>
+              <a id="dtext" style="cursor: pointer;"><i class="far fa-file-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+    $(document).ready(function(){
+            paste_id = thisURL[1];
+            if(paste_id.length<40) document.location="./";
+
+            $.ajax({
+                url: 'api.php', 
+                type : "POST", 
+                dataType : 'json',
+                contentType: 'application/json',
+                data : JSON.stringify({"action":"view","d":{"paste_id":paste_id}}),
+                success : function(result) {
+                  if(result.STATUS=='success'){
+                    $("#ptitle").text(result.DATA.title);                    
+                    $("#pcontent").text(result.DATA.content);                    
+                  }else{
+                    document.location="./";
+                  }
+                  
+                },
+                error: function(xhr, resp, text) {
+                    alert`ERR`;
+                }
+            });
+
+            $("#dpdf").on('click',function(e){
+              function showFile(blob){
+
+                  var newBlob = new Blob([blob], {type: "application/pdf"})
+                  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob);
+                    return;
+                  } 
+                  const data = window.URL.createObjectURL(newBlob);
+                  var link = document.createElement('a');
+                  link.href = data;
+                  link.download=paste_id+".pdf";
+                  link.click();
+                  setTimeout(function(){
+                    window.URL.revokeObjectURL(data);
+                  }, 100);
+                }
+
+                fetch('./api.php', {
+                  credentials: "include",
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({"action":"download","d":{"type":"_pdf","paste_id":paste_id}}),
+                  }).then(r => r.blob())
+                  .then(showFile);
+            });
+
+            $("#dtext").on('click',function(e){
+              function wshowFile(blob){
+
+                  var newBlob = new Blob([blob], {type: "plain/text"})
+                  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(newBlob);
+                    return;
+                  } 
+                  const data = window.URL.createObjectURL(newBlob);
+                  var link = document.createElement('a');
+                  link.href = data;
+                  link.download=paste_id+".txt";
+                  link.click();
+                  setTimeout(function(){
+                    window.URL.revokeObjectURL(data);
+                  }, 100);
+                }
+
+                fetch('./api.php', {
+                  credentials: "include",
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({"action":"download","d":{"type":"text","paste_id":paste_id}}),
+                  }).then(r => r.blob())
+                  .then(wshowFile);
+            });
+
+    });
+
+</script>
