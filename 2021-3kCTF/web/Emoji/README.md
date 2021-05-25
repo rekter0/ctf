@@ -22,4 +22,5 @@ first vuln here,
                 return $ma;
         }
 ```
-create a repo with html file containing payload for the RCE in img tag $d = "bash -c \"curl -o /dev/null ".escapeshellarg("https://raw.githubusercontent.com/3kctf2021webchallenge/downloader/master/".$url)."  \""; and navigate to it through path traversal so you can forge signature for your payload
+create a repo with html file containing payload for the RCE in img tag because `$d = "bash -c \"curl -o /dev/null ".escapeshellarg("https://raw.githubusercontent.com/3kctf2021webchallenge/downloader/master/".$url)."  \"";`
+and navigate to it through path traversal so you can forge signature for your payload
