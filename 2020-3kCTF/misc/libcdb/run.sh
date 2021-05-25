@@ -1,0 +1,1 @@
+while true; do socat -s TCP-LISTEN:7777,reuseaddr,fork EXEC:"timeout 300 python3 /home/ctf/service.py",raw,echo=0,pty,stderr,setsid;sleep 3; done

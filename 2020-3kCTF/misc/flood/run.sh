@@ -1,0 +1,1 @@
+while true; do socat -s TCP-LISTEN:7777,reuseaddr,fork EXEC:"timeout 300 perl /home/ctf/service.pl",raw,echo=0,pty,stderr,setsid;sleep 3; done

@@ -1,0 +1,1 @@
+while true; do socat -s TCP-LISTEN:7777,reuseaddr,fork EXEC:"timeout 300 /home/ctf/qemu-mipsel /home/ctf/challenge",raw,echo=0,pty,stderr,setsid;sleep 3; done
